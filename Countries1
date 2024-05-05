@@ -1,0 +1,94 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class CountriesList {
+    private ArrayList<String> countries;
+    private int menuOption;
+    
+    public CountriesList() {
+        countries = new ArrayList<>();
+        menuOption = 0;
+    }
+    
+    public void displayWelcomeMessage() {
+        System.out.println("Welcome to the Countries List Program!");
+    }
+    
+    public void displayMenu() {
+        System.out.println("\nMenu Options:");
+        System.out.println("1. Display countries");
+        System.out.println("2. Add a country");
+        System.out.println("3. Exit");
+    }
+    
+    public int getMenuOption() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter your choice: ");
+        menuOption = scanner.nextInt();
+        return menuOption;
+    }
+    
+    public boolean checkForCountry(String country) {
+        return countries.contains(country);
+    }
+    
+    public void addCountry(String country) {
+        countries.add(country);
+        System.out.println(country + " has been added to the list.");
+    }
+    
+    public void listCountries() {
+        if (countries.isEmpty()) {
+            System.out.println("The countries list is empty.");
+        } else {
+            Collections.sort(countries);
+            System.out.println("Countries in the list:");
+            for (String country : countries) {
+                System.out.println(country);
+            }
+        }
+    }
+}
+
+
+---------------------------------------------------------------------------------------------
+
+import java.util.Scanner;
+
+public class CountriesListApp {
+    public static void main(String[] args) {
+        CountriesList countriesList = new CountriesList();
+        
+        countriesList.displayWelcomeMessage();
+        countriesList.displayMenu();
+        
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        
+        do {
+            choice = countriesList.getMenuOption();
+            
+            switch (choice) {
+                case 1:
+                    countriesList.listCountries();
+                    break;
+                case 2:
+                    System.out.print("Enter a country: ");
+                    String country = scanner.next();
+                    if (countriesList.checkForCountry(country)) {
+                        System.out.println(country + " already exists in the list.");
+                    } else {
+                        countriesList.addCountry(country);
+                    }
+                    break;
+                case 3:
+                    System.out.println("Exiting the program...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+        } while (choice != 3);
+    }
+}
